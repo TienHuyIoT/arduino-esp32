@@ -207,7 +207,7 @@ int WiFiUDP::parsePacket(){
     return 0;
   struct sockaddr_in si_other;
   int slen = sizeof(si_other) , len;
-  char * buf = new char[1460];
+  char * buf = new (std::nothrow) char[1460];
   if(!buf){
     return 0;
   }
