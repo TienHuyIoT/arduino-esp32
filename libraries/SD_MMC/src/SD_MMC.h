@@ -34,6 +34,7 @@ public:
     uint64_t cardSize();
     uint64_t totalBytes();
     uint64_t usedBytes();
+    esp_err_t format();
 };
 
 }

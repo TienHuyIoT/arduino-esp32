@@ -24,6 +24,7 @@ extern "C" {
 #include "sdmmc_cmd.h"
 }
 #include "ff.h"
+#include "vfs_fat_internal.h"
 #include "SD_MMC.h"
 
 using namespace fs;
@@ -89,6 +90,37 @@ bool SDMMCFS::begin(const char * mountpoint, bool mode1bit, bool format_if_mount
     }
     _impl->mountpoint(mountpoint);
     return true;
+}
+
+esp_err_t SDMMCFS::format() {
+    char drv[3] = {'0', ':', 0};
+    const size_t workBuff_size = 4096;
+    void* workBuff = NULL;
+    esp_err_t err = ESP_OK;
+    ESP_LOGW("sdcard", "Formatting the SD card");
+
+    size_t allocation_unit_size = 16 * 1024;
+
+    workBuff = ff_memalloc(workBuff_size);
+    if (workBuff == NULL) {
+        return ESP_ERR_NO_MEM;
+    }
+
+    size_t alloc_unit_size = esp_vfs_fat_get_allocation_unit_size(
+                _card->csd.sector_size,
+                allocation_unit_size);
+
+    FRESULT res = f_mkfs(drv, FM_ANY, alloc_unit_size, workBuff, workBuff_size);
+    if (res != FR_OK) {
+        err = ESP_FAIL;
+        ESP_LOGE("sdcard", "f_mkfs failed (%d)", res);
+    }
+
+    free(workBuff);
+
+    ESP_LOGI("sdcard", "Successfully formatted the SD card");
+
+    return err;
 }
 
 void SDMMCFS::end()
