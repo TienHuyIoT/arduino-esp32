@@ -225,7 +225,17 @@ ETHClass::ETHClass()
 }
 
 ETHClass::~ETHClass()
-{}
+{
+    end();
+}
+
+void ETHClass::end() {
+    if (eth_handle) {
+        esp_eth_stop(eth_handle);
+        esp_eth_driver_uninstall(eth_handle);
+        eth_handle = NULL;
+    }
+}
 
 bool ETHClass::begin(uint8_t phy_addr, int power, int mdc, int mdio, eth_phy_type_t type, eth_clock_mode_t clock_mode, bool use_mac_from_efuse)
 {
