@@ -616,6 +616,9 @@ unknown_card:
 
 DSTATUS ff_sd_status(uint8_t pdrv)
 {
+    ardu_sdcard_t * card = s_cards[pdrv];
+    AcquireSPI lock(card);
+    
     if(sdTransaction(pdrv, SEND_STATUS, 0, NULL))
     {
         log_e("Check status failed");
@@ -806,7 +809,7 @@ bool sdcard_mount(uint8_t pdrv, const char* path, uint8_t max_files, bool format
               log_e("alloc for f_mkfs failed");
               return false;
             }
-            res = f_mkfs(drv, FM_ANY, 0, work, sizeof(work));
+            res = f_mkfs(drv, FM_ANY, 0, work, sizeof(BYTE) * FF_MAX_SS);
             free(work);
             if (res != FR_OK) {
                 log_e("f_mkfs failed: %s", fferr2str[res]);
