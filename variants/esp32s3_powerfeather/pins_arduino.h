@@ -9,14 +9,6 @@
 #define USB_PRODUCT        "ESP32-S3 PowerFeather"
 #define USB_SERIAL         ""
 
-#define NUM_DIGITAL_PINS        48
-#define EXTERNAL_NUM_INTERRUPTS NUM_DIGITAL_PINS
-#define NUM_ANALOG_INPUTS       20
-
-#define analogInputToDigitalPin(p)  (((p)<NUM_ANALOG_INPUTS)?(analogChannelToDigitalPin(p)):-1)
-#define digitalPinToInterrupt(p)    (((p)<=NUM_DIGITAL_PINS)?(p):-1)
-#define digitalPinHasPWM(p)         (p<=NUM_DIGITAL_PINS)
-
 static const uint8_t ALARM = 21;
 static const uint8_t INT =   5;
 
@@ -35,6 +27,10 @@ static const uint8_t SCK =   39;
 
 static const uint8_t SCL =   36;
 static const uint8_t SDA =   35;
+
+#define WIRE1_PIN_DEFINED 1
+static const uint8_t SCL1 =  48;
+static const uint8_t SDA1 =  47;
 
 static const uint8_t A0 =    10;
 static const uint8_t A1 =    9;
