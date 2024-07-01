@@ -44,6 +44,9 @@ esp32.menu.PSRAM.enabled=Enabled
 esp32.menu.PSRAM.enabled.build.defines=-DBOARD_HAS_PSRAM -mfix-esp32-psram-cache-issue
 esp32.menu.PSRAM.enabled.build.extra_libs=-lc-psram-workaround -lm-psram-workaround
 
+esp32.menu.PartitionScheme.web485_v2=web485_v2 SPIFFS (1.5MB APP with OTA/960KB SPIFFS)
+esp32.menu.PartitionScheme.web485_v2.build.partitions=web485_v2
+esp32.menu.PartitionScheme.web485_v2.upload.maximum_size=1572864
 esp32.menu.PartitionScheme.app3M_spiffs9M_16MB=16M Flash (3MB APP/9MB SPIFFS)
 esp32.menu.PartitionScheme.app3M_spiffs9M_16MB.build.partitions=app3M_spiffs9M_16MB
 esp32.menu.PartitionScheme.app3M_spiffs9M_16MB.upload.maximum_size=3145728
