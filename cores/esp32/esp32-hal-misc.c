@@ -92,7 +92,7 @@ void enableCore0WDT(){
 
 void disableCore0WDT(){
     TaskHandle_t idle_0 = xTaskGetIdleTaskHandleForCPU(0);
-    if(idle_0 == NULL || esp_task_wdt_delete(idle_0) != ESP_OK){
+    if(idle_0 == NULL || esp_task_wdt_status(idle_0) || esp_task_wdt_delete(idle_0) != ESP_OK){
         log_e("Failed to remove Core 0 IDLE task from WDT");
     }
 }
@@ -107,7 +107,7 @@ void enableCore1WDT(){
 
 void disableCore1WDT(){
     TaskHandle_t idle_1 = xTaskGetIdleTaskHandleForCPU(1);
-    if(idle_1 == NULL || esp_task_wdt_delete(idle_1) != ESP_OK){
+    if(idle_1 == NULL || esp_task_wdt_status(idle_1) || esp_task_wdt_delete(idle_1) != ESP_OK){
         log_e("Failed to remove Core 1 IDLE task from WDT");
     }
 }

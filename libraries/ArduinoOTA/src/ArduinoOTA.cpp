@@ -29,7 +29,7 @@ ArduinoOTAClass::ArduinoOTAClass()
 }
 
 ArduinoOTAClass::~ArduinoOTAClass(){
-    _udp_ota.stop();
+	end();
 }
 
 ArduinoOTAClass& ArduinoOTAClass::onStart(THandlerFunction fn) {
