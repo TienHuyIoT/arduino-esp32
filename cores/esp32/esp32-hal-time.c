@@ -14,6 +14,8 @@
 
 #include "esp32-hal.h"
 #include "lwip/apps/sntp.h"
+#include "lwip/priv/tcpip_priv.h"
+#include "lwip/err.h"
 #include "tcpip_adapter.h"
 
 static void setTimeZone(long offset, int daylight)
@@ -40,21 +42,39 @@ static void setTimeZone(long offset, int daylight)
     tzset();
 }
 
+typedef struct {
+    struct tcpip_api_call_data call;
+    u8_t mode;
+    const char *server1;
+    const char *server2;
+    const char *server3;
+} tcpip_config_time_t;
+
+static s8_t do_configTime(struct tcpip_api_call_data *msg) {
+    tcpip_config_time_t *params = (tcpip_config_time_t *)msg;
+    if(sntp_enabled()){
+        sntp_stop();
+    }
+    sntp_setoperatingmode(params->mode);
+    sntp_setservername(0, params->server1);
+    sntp_setservername(1, params->server2);
+    sntp_setservername(2, params->server3);
+    sntp_init();
+    return ERR_OK;
+}
+
 /*
  * configTime
  * Source: https://github.com/esp8266/Arduino/blob/master/cores/esp8266/time.c
  * */
 void configTime(long gmtOffset_sec, int daylightOffset_sec, const char* server1, const char* server2, const char* server3)
 {
-    tcpip_adapter_init();  // Should not hurt anything if already inited
-    if(sntp_enabled()){
-        sntp_stop();
-    }
-    sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, (char*)server1);
-    sntp_setservername(1, (char*)server2);
-    sntp_setservername(2, (char*)server3);
-    sntp_init();
+    tcpip_config_time_t msg;
+    msg.mode = SNTP_OPMODE_POLL;
+    msg.server1 = server1;
+    msg.server2 = server2;
+    msg.server3 = server3;
+    tcpip_api_call(do_configTime, (struct tcpip_api_call_data *)&msg);
     setTimeZone(-gmtOffset_sec, daylightOffset_sec);
 }
 
@@ -64,15 +84,12 @@ void configTime(long gmtOffset_sec, int daylightOffset_sec, const char* server1,
  * */
 void configTzTime(const char* tz, const char* server1, const char* server2, const char* server3)
 {
-    tcpip_adapter_init();  // Should not hurt anything if already inited
-    if(sntp_enabled()){
-        sntp_stop();
-    }
-    sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, (char*)server1);
-    sntp_setservername(1, (char*)server2);
-    sntp_setservername(2, (char*)server3);
-    sntp_init();
+    tcpip_config_time_t msg;
+    msg.mode = SNTP_OPMODE_POLL;
+    msg.server1 = server1;
+    msg.server2 = server2;
+    msg.server3 = server3;
+    tcpip_api_call(do_configTime, (struct tcpip_api_call_data *)&msg);
     setenv("TZ", tz, 1);
     tzset();
 }
