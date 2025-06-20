@@ -178,10 +178,10 @@ bool WiFiAPClass::softAPConfig(IPAddress local_ip, IPAddress gateway, IPAddress 
         lease.enable = true;
         lease.start_ip.addr = static_cast<uint32_t>(local_ip) + (1 << 24);
         lease.end_ip.addr = static_cast<uint32_t>(local_ip) + (11 << 24);
-        tcpip_adapter_dns_info_t dns_info;
-        dns_info.ip.u_addr.ip4.addr = static_cast<uint32_t>(dns);
-        dns_info.ip.type = IPADDR_TYPE_V4;
-        tcpip_adapter_set_dns_info(TCPIP_ADAPTER_IF_AP, TCPIP_ADAPTER_DNS_MAIN, &dns_info);
+        // tcpip_adapter_dns_info_t dns_info;
+        // dns_info.ip.u_addr.ip4.addr = static_cast<uint32_t>(dns);
+        // dns_info.ip.type = IPADDR_TYPE_V4;
+        // tcpip_adapter_set_dns_info(TCPIP_ADAPTER_IF_AP, TCPIP_ADAPTER_DNS_MAIN, &dns_info);
         dhcps_offer_t opt_val = OFFER_DNS; // supply a dns server via dhcps
         tcpip_adapter_dhcps_option(TCPIP_ADAPTER_OP_SET, TCPIP_ADAPTER_DOMAIN_NAME_SERVER, &opt_val, 1);
         tcpip_adapter_dhcps_option(
