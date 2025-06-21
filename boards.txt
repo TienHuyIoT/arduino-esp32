@@ -673,9 +673,15 @@ esp32.menu.PSRAM.enabled.build.extra_libs=
 esp32.menu.PartitionScheme.app3M_spiffs9M_fact512k_16MB=16M Flash (3MB APP/9.9MB SPIFFS/fact512k)
 esp32.menu.PartitionScheme.app3M_spiffs9M_fact512k_16MB.build.partitions=app3M_spiffs9M_fact512k_16MB
 esp32.menu.PartitionScheme.app3M_spiffs9M_fact512k_16MB.upload.maximum_size=3145728
+
 esp32.menu.PartitionScheme.app3M_spiffs9M_16MB=16M Flash (3MB APP/9.9MB SPIFFS)
 esp32.menu.PartitionScheme.app3M_spiffs9M_16MB.build.partitions=app3M_spiffs9M_16MB
 esp32.menu.PartitionScheme.app3M_spiffs9M_16MB.upload.maximum_size=3145728
+
+esp32.menu.PartitionScheme.app3M_spiffs9M_16MB_No_CoreDump=16M Flash (3MB APP/9.9MB SPIFFS No CoreDump)
+esp32.menu.PartitionScheme.app3M_spiffs9M_16MB_No_CoreDump.build.partitions=app3M_spiffs9M_16MB_No_CoreDump
+esp32.menu.PartitionScheme.app3M_spiffs9M_16MB_No_CoreDump.upload.maximum_size=3145728
+
 esp32.menu.PartitionScheme.default=Default 4MB with spiffs (1.2MB APP/1.5MB SPIFFS)
 esp32.menu.PartitionScheme.default.build.partitions=default
 esp32.menu.PartitionScheme.defaultffat=Default 4MB with ffat (1.2MB APP/1.5MB FATFS)
