@@ -209,10 +209,10 @@ esp_err_t set_esp_interface_ip(esp_interface_t interface, IPAddress local_ip=IPA
         	log_e("DHCPS Set Lease Failed! 0x%04x", err);
         	return err;
         }
-        esp_netif_dns_info_t dns_info;
-        dns_info.ip.u_addr.ip4.addr = 0;
-        dns_info.ip.type = IPADDR_TYPE_V4;
-        esp_netif_set_dns_info(esp_netif, ESP_NETIF_DNS_MAIN, &dns_info);
+        // esp_netif_dns_info_t dns_info;
+        // dns_info.ip.u_addr.ip4.addr = 0;
+        // dns_info.ip.type = IPADDR_TYPE_V4;
+        // esp_netif_set_dns_info(esp_netif, ESP_NETIF_DNS_MAIN, &dns_info);
         dhcps_offer_t opt_val = OFFER_DNS; // supply a dns server via dhcps
         err = esp_netif_dhcps_option(
             esp_netif,
