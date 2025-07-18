@@ -18,6 +18,10 @@
 #include "driver/sdmmc_types.h"
 #include "sd_defines.h"
 
+#ifndef SDMMC_HOST_MAX_FILES_DEFAULT
+#define SDMMC_HOST_MAX_FILES_DEFAULT 10
+#endif
+
 namespace fs
 {
 
@@ -28,7 +32,7 @@ protected:
 
 public:
     SDMMCFS(FSImplPtr impl);
-    bool begin(const char * mountpoint="/sdcard", bool mode1bit=false, bool format_if_mount_failed=false);
+    bool begin(const char *mountpoint = "/sdcard", bool mode1bit = false, bool format_if_mount_failed = false, int maxOpenFiles = SDMMC_HOST_MAX_FILES_DEFAULT);
     void end();
     sdcard_type_t cardType();
     uint64_t cardSize();
