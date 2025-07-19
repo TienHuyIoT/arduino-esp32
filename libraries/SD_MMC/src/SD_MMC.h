@@ -26,7 +26,7 @@
 #endif
 
 #ifndef SDMMC_HOST_MAX_FILES_DEFAULT
-#define SDMMC_HOST_MAX_FILES_DEFAULT 10
+#define SDMMC_HOST_MAX_FILES_DEFAULT 5
 #endif
 
 namespace fs
