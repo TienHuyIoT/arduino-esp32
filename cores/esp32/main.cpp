@@ -2,6 +2,7 @@
 #include "freertos/task.h"
 #include "esp_task_wdt.h"
 #include "Arduino.h"
+#include "sdkconfig.h"
 
 #ifndef ARDUINO_LOOP_STACK_SIZE
 #ifndef CONFIG_ARDUINO_LOOP_STACK_SIZE
@@ -12,6 +13,10 @@
 #endif
 
 TaskHandle_t loopTaskHandle = NULL;
+
+__attribute__((weak)) size_t getArduinoLoopTaskStackSize(void) {
+    return ARDUINO_LOOP_STACK_SIZE;
+}
 
 #if CONFIG_AUTOSTART_ARDUINO
 
